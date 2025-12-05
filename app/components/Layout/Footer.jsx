@@ -16,7 +16,7 @@ const Footer = () => {
     <footer className="bg-[#1C4044]   py-10  flex flex-col gap-5 lg:gap-10 lg:pt-10 lg:pb-14">
       <div className="border flex items-center  justify-center flex-col py-18  rounded-lg px-5 gap-5 md:py-10 lg:w-[50vw] mx-auto">
         <p className="text-4xl  font-light  font-serif text-center text-white ">
-          Unlock a New Chapter Make Your Financial Make Sense
+          Your Journey To Better Insights Begins Here
         </p>
         <Link
           className="px-6 py-3 capitalize bg-[#068466] rounded-sm text-white font-semibold hover:bg-[#0b9777]"
@@ -27,7 +27,7 @@ const Footer = () => {
       </div>
 
       <div className="my-8 px-5 md:my-3">
-        <p className="text-center  text-white md:text-lg">
+        <p className="  text-white text-sm lg:px-20">
           The content provided by EquityEdge Research is intended solely for
           educational and informational purposes. While our articles and reports
           are prepared using publicly available data and sources considered
@@ -82,83 +82,43 @@ const Footer = () => {
         </div>
       </div>
 
-      <div className="px-5 grid grid-cols-1 gap-5 md:grid-cols-2 md:text-center md:text-lg">
-        <div className="text-white ">
-          <p className="font-serif text-2xl mb-5">Link</p>
-          <div className="flex  flex-col gap-2">
+      <div className="">
+        <div className="text-white">
+          <div className="text-center grid grid-cols-5  ">
             <Link
               href={"/"}
-              className="hover:scale-105 duration-300 hover:font-bold"
+              className="hover:scale-105 duration-300 hover:font-bold text-xl"
             >
               Home
             </Link>
             <Link
               href={"/about"}
-              className="hover:scale-105 duration-300 hover:font-bold"
+              className="hover:scale-105 duration-300 hover:font-bold text-xl"
             >
               About
             </Link>
             <Link
               href={"/service"}
-              className="hover:scale-105 duration-300 hover:font-bold"
+              className="hover:scale-105 duration-300 hover:font-bold text-xl"
             >
               Service
             </Link>
             <Link
               href={"/contact"}
-              className="hover:scale-105 duration-300 hover:font-bold"
+              className="hover:scale-105 duration-300 hover:font-bold text-xl"
             >
               Contact
             </Link>
             <Link
               href={"/blogs"}
-              className="hover:scale-105 duration-300 hover:font-bold"
+              className="hover:scale-105 duration-300 hover:font-bold text-xl"
             >
               Blogs
             </Link>
           </div>
         </div>
-        <div className="text-white ">
-          <p className="font-serif text-2xl mb-5">Information</p>
-          <div className="flex  flex-col gap-2">
-            <Link
-              href={"/"}
-              className=" hover:font-bold"
-            >
-              Our Terms & Conditions
-            </Link>
-          
-          </div>
-        </div>
-        {/* <div className="text-white ">
-          <p className="font-serif text-2xl mb-5">Need Help</p>
-          <div className="flex  flex-col gap-2">
-            <Link
-              href={"/"}
-              className="hover:scale-105 duration-300 hover:font-bold"
-            >
-              locatio hrere 20d ffdf
-            </Link>
-            <Link
-              href={"/"}
-              className="hover:scale-105 duration-300 hover:font-bold"
-            >
-              info@eqityedge.com
-            </Link>
-            <Link
-              href={"/"}
-              className="hover:scale-105 duration-300 hover:font-bold"
-            >
-              +91 88534 43434
-            </Link>
-            <Link
-              href={"/"}
-              className="hover:scale-105 duration-300 hover:font-bold"
-            >
-              +91 88534 43434
-            </Link>
-          </div>
-        </div> */}
+       
+       
       </div>
 
       {/* <p className="text-center text-white mt-8">

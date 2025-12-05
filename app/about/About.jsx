@@ -1,6 +1,6 @@
 "use client";
 
-import { whatWeDo } from "@/data";
+import { whatWeDoWithPointer } from "@/data";
 import {
   GaugeCircle,
   LineChart,
@@ -22,11 +22,11 @@ const About = () => {
   return (
     <div className="pt-24 bg-white">
       {/* 1. HERO SECTION */}
-      <section className="bg-[#F9F7F3] text-center py-16 md:py-24 px-5">
-        <h1 className="font-serif text-4xl md:text-6xl font-medium">
+      <section className="bg-[#F9F7F3]  py-16 md:py-24 px-5">
+        <h1 className="font-serif text-4xl text-center md:text-6xl font-medium">
           About EquityEdge
         </h1>
-        <p className="text-lg md:text-xl text-gray-700 mt-4 max-w-3xl mx-auto">
+        <p className="text-lg md:text-lg text-gray-700 mt-4 max-w-3xl mx-auto">
           Learn about our journey, our mission, and the dedicated team committed
           to bringing you world-class equity research.
         </p>
@@ -37,7 +37,7 @@ const About = () => {
         <h3 className="font-medium font-serif text-4xl text-center md:text-5xl lg:text-left">
           Who We Are
         </h3>
-        <p className="text-center text-gray-700 my-3 lg:text-left md:text-lg">
+        <p className="text-left text-lg px-5 text-gray-700 my-3 lg:text-left md:text-lg">
           We are a Team of Three Nerds who met co-incidentally and decided to
           start their Journey in the field of Research. It all started as an
           initiative in April 2024 where we wanted to learn and simultaneously
@@ -45,9 +45,8 @@ const About = () => {
           still considered a Taboo by Many Indian Households, especially the
           Rural Region. Now, we want to break this Taboo by providing adequate
           and data backed Research so that each individual feels confident
-          before taking the decision to Invest and still keep it
-          affordable by charging almost 1/4th of what other well-known platforms
-          charge.
+          before taking the decision to Invest and still keep it affordable by
+          charging almost 1/4th of what other well-known platforms charge.
         </p>
 
         <p className="text-center font-serif text-3xl pt-12 pb-8">
@@ -62,7 +61,7 @@ const About = () => {
             <p className="text-xl text-gray-600 text-center font-serif font-semibold">
               Level 1
             </p>
-            <p className="text-center text-lg">
+            <p className="text-center text-lg px-5">
               Beginner who is starting by learning How Companies work?
             </p>
           </div>
@@ -80,7 +79,7 @@ const About = () => {
             <p className="text-xl text-gray-600 text-center font-serif font-semibold">
               Level 2
             </p>
-            <p className="text-center text-lg">
+            <p className="text-center text-lg px-5">
               An Intermediate Investor who wants to Explore And Expand His/Her
               Portfolio.
             </p>
@@ -99,7 +98,7 @@ const About = () => {
             <p className="text-xl text-gray-600 text-center font-serif font-semibold">
               Level 3
             </p>
-            <p className="text-center text-lg">
+            <p className="text-center text-lg px-5">
               A Master in his craft who is thinking What Company Should I buy
               next?
             </p>
@@ -249,15 +248,15 @@ const About = () => {
       </section>
 
       {/* 6. WHAT WE DO */}
-      <section className="py-16 md:px-10 lg:px-32">
+      <section className="px-5 py-16 md:px-10 lg:px-32">
         <h3 className="font-medium font-serif text-4xl text-center md:text-5xl lg:text-left">
           What we do?
         </h3>
-        <p className="text-center text-gray-700 my-3 lg:text-left md:text-lg">
+        <p className="text-left text-gray-700 my-3 lg:text-left text-lg">
           With time, we realized that there is too less covering the Small-Cap
           or Mirco-Cap companies and there are too many who want to invest.
         </p>
-        <p className="text-center text-gray-700 my-3 lg:text-left md:text-lg">
+        <p className="text-left  text-gray-700 my-3 lg:text-left text-lg">
           Well, if you want to understand the business better, you must know
           about the Industry as well.
         </p>
@@ -265,19 +264,30 @@ const About = () => {
           So, here we are. This is what we provide:
         </p>
 
-        <div className="grid  grid-cols-1  gap-5">
-          {whatWeDo.map((item, index) => (
+        <div className="grid  grid-cols-1 md:grid-cols-3  gap-5">
+          {whatWeDoWithPointer.map((item, index) => (
             <div
               key={index}
               onMouseEnter={() => setHoveredIndex(index)}
               onMouseLeave={() => setHoveredIndex(null)}
-              className={`bg-gray-100 px-5  py-5 rounded-lg text-lg font-serif hover:bg-white hover:scale-105 hover:shadow-2xl duration-300 md:text-xl ${
+              className={`bg-gray-100 p-6 rounded-lg  hover:bg-white hover:scale-105 hover:shadow-2xl duration-300 ${
                 hoveredIndex !== null && hoveredIndex !== index
                   ? "blur-sm opacity-45"
                   : ""
               }`}
             >
-              {index + 1}. {item}
+              <div className="text-center font-bold text-2xl mb-5 font-serif">{item?.title}</div>
+              <ul className="space-y-4">
+                {item.points.map((point, pointIndex) => (
+                  <li key={pointIndex} className="flex items-start gap-3">
+                    <ChevronRight
+                      className="text-green-600 mt-1 flex-shrink-0"
+                      size={20}
+                    />
+                    <span className="text-lg md:text-xl">{point}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
           ))}
         </div>

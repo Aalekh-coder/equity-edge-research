@@ -47,7 +47,7 @@ export const ServiceCard = ({
         </p>
         <p className="font-semibold text-black my-3 text-lg">{subTitle}</p>
       </div>
-      <ul className="space-y-2 text-gray-700 mt-4 mb-6 flex-grow">
+      <ul className="space-y-2 text-gray-700 mt-4 mb-6 grow flex items-start flex-col ml-6">
         {desc.map((point, index) => (
           <li key={index} className="flex items-start gap-2">
             <CheckCircle size={18} className="text-green-600 mt-1 shrink-0" />

@@ -1,29 +1,79 @@
 "use client";
 import { BlogCard, ServiceCard } from "@/components/miniComponents/BlogCard";
 import Button from "@/components/miniComponents/Button";
-import * as Dialog from "@radix-ui/react-dialog";
+import {
+  Dialog,
+  DialogClose,
+  DialogDescription,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import PopForm from "@/components/sections/PopForm";
 import { blogs, ourCoreService, whatWeDo } from "@/data";
 import { faq } from "@/data";
+import emailjs from "@emailjs/browser";
 import {
   ChartSpline,
   ChevronRight,
   ChevronDown,
-  GaugeCircle,
-  LineChart,
-  Users,
   Linkedin,
   Mail,
+  CheckCircle,
+  FileText,
+  Briefcase,
+  MessageSquare,
+  Users,
+  Globe,
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
-import { DotLottieReact } from '@lottiefiles/dotlottie-react';
-
-
+import { DotLottieReact } from "@lottiefiles/dotlottie-react";
+import CountUp from "react-countup";
 
 const HomePage = () => {
-  const [hoveredIndex, setHoveredIndex] = useState(null);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [message, setMessage] = useState("");
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    setIsLoading(true);
+
+    const serviceId = "service_tegcndj";
+    const templateId = "template_qkpjvrp";
+    const publicKey = "IhgM9-nEe1XWmf6Th";
+
+    const templateParams = {
+      from_name: name,
+      from_email: email,
+      to_name: "Equity Edge Research",
+      message: message,
+      phone: phone,
+    };
+
+    emailjs
+      .send(serviceId, templateId, templateParams, publicKey)
+      .then((res) => {
+        console.log(res);
+        setEmail("");
+        setName("");
+        setMessage("");
+        setPhone("");
+        setIsSubmitted(true);
+      })
+      .catch((error) => {
+        console.error("error send email", error);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }
+
   const [openFaq, setOpenFaq] = useState(null);
   return (
     <div className="px-3 ">
@@ -38,11 +88,7 @@ const HomePage = () => {
             priority
             className="h-55 w-auto md:h-80 lg:h-[45vh] lg:w-auto"
           /> */}
-           <DotLottieReact
-      src="/home/Revenue.lottie"
-      loop
-      autoplay
-    />
+          <DotLottieReact src="/home/Revenue.lottie" loop autoplay />
         </div>
 
         {/* para  */}
@@ -56,7 +102,7 @@ const HomePage = () => {
           </p>
 
           {/* <div  className="relative"> */}
-          <div className="flex items-center justify-center gap-4 my-6 text-left border px-5 py-4 rounded-md lg:w-[20vw]">
+          {/* <div className="flex items-center justify-center gap-4 my-6 text-left border px-5 py-4 rounded-md lg:w-[20vw]">
             <div className="bg-[#068466] text-white p-3 rounded-full">
               <ChartSpline size={25} />
             </div>
@@ -67,7 +113,7 @@ const HomePage = () => {
                 2023.
               </p>
             </div>
-          </div>
+          </div> */}
 
           <div className="flex-col  flex items-center gap-5 mt-3 md:mt-8 md:flex-row justify-center lg:justify-start">
             <Link
@@ -76,14 +122,14 @@ const HomePage = () => {
             >
               Explore our research
             </Link>
-            <Dialog.Root>
-              <Dialog.Trigger asChild>
+            <Dialog>
+              <DialogTrigger asChild>
                 <button className="hidden px-6 py-3 capitalize bg-[#068466] rounded-sm text-white font-semibold hover:bg-[#0b9777] md:inline-block">
                   Get In Touch
                 </button>
-              </Dialog.Trigger>
+              </DialogTrigger>
               <PopForm />
-            </Dialog.Root>
+            </Dialog>
           </div>
         </div>
       </section>
@@ -92,25 +138,19 @@ const HomePage = () => {
       <section className="mb-5 text-gray-700  md:px-10 lg:px-32 lg:py-20">
         <div className="md:flex md:gap-4 md:items-center md:mb-5 md:justify-center">
           <div className="md:w-2/3">
-            <h2 className="text-4xl font-serif font-medium lg:text-5xl">
+            <h2 className="text-4xl font-serif font-medium lg:text-5xl text-center">
               LATEST &apos;BLOGS&apos;
             </h2>
-            <p className="md:text-lg">
+            <p className="md:text-lg text-center">
               Stay updated with our latest thoughts, insights, and research. On
               our Substack, we publish deep-dive articles on markets, economics,
               business models, free small-cap studies, and industry research —
               all curated to help you understand the market better.
             </p>
           </div>
-          <Link
-            href="/blog"
-            className="flex items-center text-white justify-center gap-2 bg-[#068466] my-2 px-5 py-2  rounded font-semibold mt-5 mx-auto"
-          >
-            More Blog <ChevronRight size={15} />
-          </Link>
         </div>
 
-        <div className="px-0.5 py-5 grid grid-cols-1  gap-5 md:grid-cols-2 lg:grid-cols-4">
+        <div className="px-0.5 py-5 grid grid-cols-1  gap-5 md:grid-cols-2 lg:grid-cols-3">
           {blogs.map(({ image, title, desc, link }, idx) => (
             <BlogCard
               key={idx}
@@ -121,6 +161,13 @@ const HomePage = () => {
             />
           ))}
         </div>
+        <a
+          href="https://equityedgeresearch.substack.com/"
+          target="_blank"
+          className="flex items-center text-white justify-center gap-2 bg-[#068466] my-2 px-5 py-2  rounded font-semibold mt-5 mx-auto w-55"
+        >
+          More
+        </a>
       </section>
 
       {/* about us  */}
@@ -534,6 +581,129 @@ const HomePage = () => {
         </div>
       </section>
 
+         {/* 4. FOCUS ON GROWTH */}
+      <section className="py-16 md:px-10 lg:px-32">
+        <p className="text-4xl md:text-5xl font-serif font-medium lg:pt-10 text-center">
+          Focus on Growth and Breadth
+        </p>
+        <p className="text-lg py-4 text-center max-w-3xl mx-auto">
+          Financial success demands disciplined focus on growth metrics and
+          broad systemic exposure, mitigating concentrated risk while maximizing
+          long-term shareholder value creation.
+        </p>
+        <div className="mt-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {/* Metric Card 1: Reports Published */}
+            <div className="p-6 bg-gradient-to-br from-gray-50 to-white rounded-lg shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 flex flex-col items-center text-center border border-gray-200">
+              <div className="bg-[#068466] p-4 rounded-full mb-4">
+                <FileText size={36} className="text-white" />
+              </div>
+              <p className="text-6xl font-extrabold text-[#068466] font-serif leading-tight">
+                <CountUp
+                  end={20}
+                  duration={2.5}
+                  enableScrollSpy
+                  scrollSpyOnce
+                />
+                +
+              </p>
+              <p className="text-xl text-gray-700 mt-3 font-semibold">
+                Reports Published
+              </p>
+            </div>
+
+            {/* Metric Card 2: Sectors Covered */}
+            <div className="p-6 bg-gradient-to-br from-gray-50 to-white rounded-lg shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 flex flex-col items-center text-center border border-gray-200">
+              <div className="bg-[#068466] p-4 rounded-full mb-4">
+                <Briefcase size={36} className="text-white" />
+              </div>
+              <p className="text-6xl font-extrabold text-[#068466] font-serif leading-tight">
+                <CountUp
+                  end={20}
+                  duration={2.5}
+                  enableScrollSpy
+                  scrollSpyOnce
+                />
+                +
+              </p>
+              <p className="text-xl text-gray-700 mt-3 font-semibold">
+                Sectors Covered
+              </p>
+            </div>
+
+            {/* Metric Card 3: Subscriber Queries Solved */}
+            <div className="p-6 bg-gradient-to-br from-gray-50 to-white rounded-lg shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 flex flex-col items-center text-center border border-gray-200">
+              <div className="bg-[#068466] p-4 rounded-full mb-4">
+                <MessageSquare size={36} className="text-white" />
+              </div>
+              <p className="text-6xl font-extrabold text-[#068466] font-serif leading-tight">
+                <CountUp
+                  end={500}
+                  duration={2.5}
+                  enableScrollSpy
+                  scrollSpyOnce
+                />
+                +
+              </p>
+              <p className="text-xl text-gray-700 mt-3 font-semibold">
+                Subscriber Queries Solved
+              </p>
+            </div>
+
+            {/* Metric Card 4: Subscribers */}
+            <div className="p-6 bg-gradient-to-br from-gray-50 to-white rounded-lg shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 flex flex-col items-center text-center border border-gray-200">
+              <div className="bg-[#068466] p-4 rounded-full mb-4">
+                <Users size={36} className="text-white" />
+              </div>
+              <p className="text-6xl font-extrabold text-[#068466] font-serif leading-tight">
+                <CountUp
+                  end={13}
+                  duration={2.5}
+                  enableScrollSpy
+                  scrollSpyOnce
+                />
+                k+
+              </p>
+              <p className="text-xl text-gray-700 mt-3 font-semibold">
+                Subscribers
+              </p>
+            </div>
+
+            {/* Metric Card 5: Subscribers located across states and countries (Spanning two columns) */}
+            <div className="p-6 bg-gradient-to-br from-gray-50 to-white rounded-lg shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 md:col-span-2 flex flex-col items-center text-center border border-gray-200">
+              <div className="bg-[#068466] p-4 rounded-full mb-4">
+                <Globe size={36} className="text-white" />
+              </div>
+              <p className="text-3xl font-semibold text-gray-800 mb-4">
+                Subscribers located across{" "}
+              </p>
+              <p className="text-6xl font-extrabold text-[#068466] font-serif leading-tight">
+                <CountUp
+                  end={37}
+                  duration={2.5}
+                  enableScrollSpy
+                  scrollSpyOnce
+                />
+                <span className="text-3xl text-gray-600 font-medium ml-2">
+                  States
+                </span>
+              </p>
+              <p className="text-6xl font-extrabold text-[#068466] font-serif leading-tight mt-2">
+                <CountUp
+                  end={121}
+                  duration={2.5}
+                  enableScrollSpy
+                  scrollSpyOnce
+                />
+                <span className="text-3xl text-gray-600 font-medium ml-2">
+                  Countries
+                </span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Frequently Asked Questions */}
       <section className="py-10 md:py-16 lg:px-32 flex flex-col lg:flex-row gap-10">
         <div className="lg:w-1/2">
@@ -570,60 +740,91 @@ const HomePage = () => {
             Get in Touch with us{" "}
             <span className="text-[#047e5f]  font-semibold">Today</span>
           </h3>
-          <form className="space-y-6 px-5">
-            <div>
-              <label htmlFor="name" className="sr-only">
-                Name
-              </label>
-              <input
-                type="text"
-                id="name"
-                placeholder="Name"
-                className="text-lg border w-full p-3 rounded-xl border-gray-400 focus:outline-none focus:ring-2 focus:ring-[#068466] transition-all duration-300"
-              />
+          {isSubmitted ? (
+            <div className="flex flex-col items-center justify-center text-center bg-gray-50 p-8 rounded-lg shadow-md border ">
+              <div className="bg-[#068466] text-white p-4 rounded-full mb-6 ">
+                <CheckCircle size={40} />
+              </div>
+              <h3 className="font-serif text-3xl md:text-4xl font-medium text-gray-900">
+                Thank You!
+              </h3>
+              <p className="mt-4 text-lg text-gray-600 max-w-sm ">
+                Your message has been sent successfully. We will get back to you
+                shortly.
+              </p>
             </div>
-            <div>
-              <label htmlFor="email" className="sr-only">
-                Email
-              </label>
-              <input
-                type="email"
-                id="email"
-                placeholder="Email"
-                className="text-lg border w-full p-3 rounded-xl border-gray-400 focus:outline-none focus:ring-2 focus:ring-[#068466] transition-all duration-300"
-              />
-            </div>
-            <div>
-              <label htmlFor="contact" className="sr-only">
-                Contact Number
-              </label>
-              <input
-                type="tel"
-                id="contact"
-                placeholder="Contact Number"
-                className="text-lg border w-full p-3 rounded-xl border-gray-400 focus:outline-none focus:ring-2 focus:ring-[#068466] transition-all duration-300"
-              />
-            </div>
-            <div>
-              <label htmlFor="requirement" className="sr-only">
-                Your Requirement
-              </label>
-              <textarea
-                id="requirement"
-                placeholder="Your Requirement"
-                rows="2"
-                className="text-lg border w-full p-3 rounded-xl border-gray-400 focus:outline-none focus:ring-2 focus:ring-[#068466] transition-all duration-300"
-              ></textarea>
-            </div>
-            <div>
-              <button
-                type="submit"
-                className="w-full py-2 px-8 text-lg mt-2 rounded-lg uppercase bg-[#068466] hover:bg-[#056d54] text-white font-semibold transition-colors duration-300"
-              >
-                Submit
-              </button>
-            </div>
-          </form>
+          ) : (
+            <form onSubmit={handleSubmit} className="space-y-6 px-5">
+              <div>
+                <label htmlFor="name" className="sr-only">
+                  Name
+                </label>
+                <input
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  type="text"
+                  id="name"
+                  required
+                  placeholder="Name"
+                  className="text-lg border w-full p-3 rounded-xl border-gray-400 focus:outline-none focus:ring-2 focus:ring-[#068466] transition-all duration-300"
+                />
+              </div>
+              <div>
+                <label htmlFor="email" className="sr-only">
+                  Email
+                </label>
+                <input
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  type="email"
+                  id="email"
+                  placeholder="Email"
+                  className="text-lg border w-full p-3 rounded-xl border-gray-400 focus:outline-none focus:ring-2 focus:ring-[#068466] transition-all duration-300"
+                />
+              </div>
+              <div>
+                <label htmlFor="contact" className="sr-only">
+                  Contact Number
+                </label>
+                <input
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  required
+                  type="tel"
+                  maxLength={10}
+                  minLength={10}
+                  pattern="[0-9]{10}"
+                  id="contact"
+                  placeholder="Contact Number"
+                  className="text-lg border w-full p-3 rounded-xl border-gray-400 focus:outline-none focus:ring-2 focus:ring-[#068466] transition-all duration-300"
+                />
+              </div>
+              <div>
+                <label htmlFor="requirement" className="sr-only">
+                  Your Requirement
+                </label>
+                <textarea
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                  id="requirement"
+                  placeholder="Your Requirement"
+                  rows="2"
+                  className="text-lg border w-full p-3 rounded-xl border-gray-400 focus:outline-none focus:ring-2 focus:ring-[#068466] transition-all duration-300"
+                ></textarea>
+              </div>
+              <div>
+                <button
+                  type="submit"
+                  value={"send"}
+                  disabled={isLoading}
+                  className="w-full py-2 px-8 text-lg mt-2 rounded-lg uppercase bg-[#068466] hover:bg-[#056d54] text-white font-semibold transition-colors duration-300"
+                >
+                  {isLoading ? "Submitting..." : "Submit Request"}
+                </button>
+              </div>
+            </form>
+          )}
 
           <div className="border-t-2 my-5 mx-10" />
 

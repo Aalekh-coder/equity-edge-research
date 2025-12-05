@@ -1,9 +1,52 @@
 "use client";
-import { Mail, Phone, MapPin, Linkedin } from "lucide-react";
+import emailjs from "@emailjs/browser";
+import { Mail, Phone, MapPin, Linkedin, CheckCircle } from "lucide-react";
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 
 const Contact = () => {
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [message, setMessage] = useState("");
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    setIsLoading(true);
+
+    const serviceId = "service_tegcndj";
+    const templateId = "template_qkpjvrp";
+    const publicKey = "IhgM9-nEe1XWmf6Th";
+
+    const templateParams = {
+      from_name: name,
+      from_email: email,
+      to_name: "Equity Edge Research",
+      message: message,
+      phone: phone,
+    };
+
+    emailjs
+      .send(serviceId, templateId, templateParams, publicKey)
+      .then((res) => {
+        console.log(res);
+        setEmail("");
+        setName("");
+        setMessage("");
+        setPhone("");
+        setIsSubmitted(true);
+      })
+      .catch((error) => {
+        console.error("error send email", error);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }
+
   return (
     <div className="pt-24 bg-white">
       {/* 1. HERO SECTION */}
@@ -37,24 +80,9 @@ const Contact = () => {
                   href="mailto:equityedgeresearch@gmail.com"
                   className="text-lg text-gray-800 hover:text-[#068466] transition-colors"
                 >
-                  Equityedgeresearch@gmail.com
+                  equityedgeresearch@gmail.com
                 </a>
               </div>
-              {/* <div className="flex items-center gap-4">
-                <Phone size={24} className="text-[#068466]" />
-                <a
-                  href="tel:+1234567890"
-                  className="text-lg text-gray-800 hover:text-[#068466] transition-colors"
-                >
-                  +1 (234) 567-890
-                </a>
-              </div>
-              <div className="flex items-center gap-4">
-                <MapPin size={24} className="text-[#068466]" />
-                <p className="text-lg text-gray-800">
-                  123 Equity Lane, Financial District, New Delhi
-                </p>
-              </div> */}
             </div>
 
             <div className="border-t pt-8">
@@ -106,61 +134,105 @@ const Contact = () => {
           </div>
 
           {/* Form */}
-          <div className="bg-gray-50 p-8 rounded-lg shadow-md">
-            <form className="space-y-6">
-              <div>
-                <label
-                  htmlFor="name"
-                  className="block text-lg font-medium text-gray-800 mb-2"
-                >
-                  Name
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  placeholder="John Doe"
-                  className="text-lg border w-full p-3 rounded-xl border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#068466] transition-all duration-300"
-                />
+          {isSubmitted ? (
+            <div className="flex flex-col items-center justify-center text-center bg-gray-50 p-8 rounded-lg shadow-md border ">
+              <div className="bg-[#068466] text-white p-4 rounded-full mb-6 ">
+                <CheckCircle size={40} />
               </div>
-              <div>
-                <label
-                  htmlFor="email"
-                  className="block text-lg font-medium text-gray-800 mb-2"
-                >
-                  Email
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  placeholder="you@example.com"
-                  className="text-lg border w-full p-3 rounded-xl border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#068466] transition-all duration-300"
-                />
-              </div>
-              <div>
-                <label
-                  htmlFor="message"
-                  className="block text-lg font-medium text-gray-800 mb-2"
-                >
-                  Message
-                </label>
-                <textarea
-                  id="message"
-                  placeholder="Your message..."
-                  rows="5"
-                  className="text-lg border w-full p-3 rounded-xl border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#068466] transition-all duration-300"
-                ></textarea>
-              </div>
-              <div>
-                <button
-                  type="submit"
-                  className="w-full py-3 px-8 text-lg rounded-xl uppercase bg-[#068466] hover:bg-[#056d54] text-white font-semibold transition-colors duration-300"
-                >
-                  {" "}
-                  Send Message{" "}
-                </button>
-              </div>
-            </form>
-          </div>
+              <h3 className="font-serif text-3xl md:text-4xl font-medium text-gray-900">
+                Thank You!
+              </h3>
+              <p className="mt-4 text-lg text-gray-600 max-w-sm ">
+                Your message has been sent successfully. We will get back to you
+                shortly.
+              </p>
+            </div>
+          ) : (
+            <div className="bg-gray-50 p-8 rounded-lg shadow-md">
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div>
+                  <label
+                    htmlFor="name"
+                    className="block text-lg font-medium text-gray-800 mb-2"
+                  >
+                    Name
+                  </label>
+                  <input
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    required
+                    type="text"
+                    id="name"
+                    placeholder="Name"
+                    className="text-lg border w-full p-3 rounded-xl border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#068466] transition-all duration-300"
+                  />
+                </div>
+                <div>
+                  <label
+                    htmlFor="email"
+                    className="block text-lg font-medium text-gray-800 mb-2"
+                  >
+                    Email
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                    placeholder="Email"
+                    className="text-lg border w-full p-3 rounded-xl border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#068466] transition-all duration-300"
+                  />
+                </div>
+                <div>
+                  <label
+                    htmlFor="phone"
+                    className="block text-lg font-medium text-gray-800 mb-2"
+                  >
+                    Phone
+                  </label>
+                  <input
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                    required
+                    type="tel"
+                    maxLength={10}
+                    minLength={10}
+                    pattern="[0-9]{10}"
+                    id="phone"
+                    placeholder="Phone"
+                    className="text-lg border w-full p-3 rounded-xl border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#068466] transition-all duration-300"
+                  />
+                </div>
+                <div>
+                  <label
+                    htmlFor="message"
+                    className="block text-lg font-medium text-gray-800 mb-2"
+                  >
+                    Message
+                  </label>
+                  <textarea
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                    id="message"
+                    placeholder="Your message..."
+                    rows="5"
+                    className="text-lg border w-full p-3 rounded-xl border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#068466] transition-all duration-300"
+                  ></textarea>
+                </div>
+                <div>
+                  <button
+                    type="submit"
+                    disabled={isLoading}
+                    className="w-full py-3 px-8 text-lg rounded-xl uppercase bg-[#068466] hover:bg-[#056d54] text-white font-semibold transition-colors duration-300"
+                  >
+                    {" "}
+                    Send Message{" "}
+                  </button>
+                </div>
+              </form>
+            </div>
+          )}
         </div>
       </section>
     </div>

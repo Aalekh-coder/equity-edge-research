@@ -1,6 +1,15 @@
 "use client";
-import React, { useRef, useState } from "react";
-import * as Dialog from "@radix-ui/react-dialog";
+import { useState } from "react";
+import {
+  DialogPortal,
+  DialogOverlay,
+  DialogContent,
+  DialogTitle,
+  DialogDescription,
+  DialogClose,
+  DialogHeader,
+  Dialog,
+} from "@/components/ui/dialog";
 import { X, Mail, CheckCircle } from "lucide-react";
 import emailjs from "@emailjs/browser";
 
@@ -17,9 +26,9 @@ const PopForm = () => {
     e.preventDefault();
     setIsLoading(true);
 
-    const serviceId = "service_lmkxw3e";
-    const templateId = "template_kyz89fd";
-    const publicKey = "aAZPa8zRkvspV1J9l";
+    const serviceId = "service_tegcndj";
+    const templateId = "template_qkpjvrp";
+    const publicKey = "IhgM9-nEe1XWmf6Th";
 
     const templateParams = {
       from_name: name,
@@ -44,43 +53,42 @@ const PopForm = () => {
       })
       .finally(() => {
         setIsLoading(false);
-      })
+      });
   }
+
   return (
-    <Dialog.Portal>
-      <Dialog.Overlay className="bg-black/50 data-[state=open]:animate-overlayShow fixed inset-0 z-40" />
-      <Dialog.Content className="data-[state=open]:animate-contentShow fixed top-1/2 left-1/2 w-[90vw] max-w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-xl bg-white p-6 md:p-8 shadow-2xl z-50 focus:outline-none">
+    <DialogPortal>
+      <DialogOverlay />
+      <DialogContent className="sm:max-w-[500px]">
         {isSubmitted ? (
-          <div className="flex flex-col items-center text-center">
-            <div className="bg-[#068466] text-white p-4 rounded-full mb-4">
-              <CheckCircle size={32} />
-            </div>
-            <Dialog.Title className="font-serif text-2xl md:text-3xl font-medium text-gray-900">
+          <Dialog className="flex flex-col items-center text-center">
+            
+            <DialogTitle className="font-serif text-2xl md:text-3xl font-medium text-gray-900">
               Thank You!
-            </Dialog.Title>
-            <Dialog.Description className="mt-2 mb-6 text-base text-gray-600 max-w-sm">
+            </DialogTitle>
+            <DialogDescription className="mt-2 mb-6 text-base text-gray-600 max-w-sm">
               Your message has been sent successfully. We will get back to you
               shortly.
-            </Dialog.Description>
-            <Dialog.Close asChild>
+            </DialogDescription>
+            <DialogClose asChild>
               <button className="w-full py-3 px-8 text-lg rounded-lg uppercase bg-[#068466] hover:bg-[#056d54] text-white font-semibold transition-colors duration-300">
                 Close
               </button>
-            </Dialog.Close>
-          </div>
+            </DialogClose>
+          </Dialog>
         ) : (
           <div className="">
             <div className="flex flex-col items-center text-center">
               <div className="bg-[#068466] text-white p-4 rounded-full mb-4">
                 <Mail size={32} />
               </div>
-              <Dialog.Title className="font-serif text-2xl md:text-3xl font-medium text-gray-900">
+              <DialogTitle className="font-serif text-2xl md:text-3xl font-medium text-gray-900">
                 Get in Touch
-              </Dialog.Title>
-              <Dialog.Description className="mt-2 mb-6 text-base text-gray-600 max-w-sm">
+              </DialogTitle>
+              <DialogDescription className="mt-2 mb-6 text-base text-gray-600 max-w-sm">
                 Have a question, a custom request, or just want to say hello? We
                 would love to hear from you.
-              </Dialog.Description>
+              </DialogDescription>
             </div>
 
             <form className="space-y-4" onSubmit={handleSubmit}>
@@ -157,16 +165,8 @@ const PopForm = () => {
             </form>
           </div>
         )}
-        <Dialog.Close asChild>
-          <button
-            className="absolute top-3 right-3 inline-flex h-8 w-8 appearance-none items-center justify-center rounded-full text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-400"
-            aria-label="Close"
-          >
-            <X />
-          </button>
-        </Dialog.Close>
-      </Dialog.Content>
-    </Dialog.Portal>
+      </DialogContent>
+    </DialogPortal>
   );
 };
 

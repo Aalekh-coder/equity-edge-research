@@ -2,6 +2,8 @@
 import {
   Sheet,
   SheetContent,
+  SheetHeader,
+  SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
 import {
@@ -10,6 +12,7 @@ import {
   ChartNoAxesGantt,
   Home,
   Mail,
+  Menu,
   Users,
   X,
 } from "lucide-react";
@@ -22,87 +25,39 @@ import PopForm from "@/components/sections/PopForm";
 const Navbar = () => {
   const [navOpen, setNavOpen] = useState(false);
   return (
-    <nav className="bg-[#1C4044] flex items-center justify-between px-5 py-5 lg:px-10 fixed inset-x-0 z-40">
-      {/* <div className="flex items-center "> */}
-        {/* <Image
-          src={"/logo2.png"}
+    <nav className="bg-[#1C4044] flex items-center justify-between px-3  lg:px-10 fixed inset-x-0 z-40">
+      <Link href={"/"} className="flex items-center ">
+        <Image
+          src={"/EER Logo Mark.svg"}
           width={1000}
           height={1000}
           alt="logo"
-          className="h-20 w-auto"
-        /> */}
-        <p className="font-bold text-2xl text-white font-serif">Equity Edge Research</p>
-      {/* </div> */}
+          className="h-20 w-auto md:h-22  lg:h-26"
+        />
+        <p className="font-bold text-2xl text-white font-serif">
+          EquityEdge Research
+        </p>
+      </Link>
       <Sheet open={navOpen} onOpenChange={() => setNavOpen(!navOpen)}>
-        <SheetTrigger asChild on>
-          <ChartNoAxesGantt
+        <SheetTrigger asChild>
+          <Menu
             color="white"
             size={30}
             onClick={() => setNavOpen(!navOpen)}
             className="md:hidden"
           />
         </SheetTrigger>
-        {/* <SheetContent side="left">
-          <SheetHeader className={"hidden"}>
-            <SheetTitle>Are you absolutely sure?</SheetTitle>
-            <SheetDescription>
-              This action cannot be undone. This will permanently delete your
-              account and remove your data from our servers.
-            </SheetDescription>
-          </SheetHeader>
-          <div className="px-5 py-10">
-            <p className="font-serif font-bold text-2xl hover:underline">
-              Equity Edge
-            </p>
-
-            <div className="flex flex-col text-xl gap-5  mt-5">
-              <Link
-                onClick={() => setNavOpen(!navOpen)}
-                className="hover:font-bold  text-gray-700  font-semibold  hover:text-black"
-                href={"/"}
-              >
-                Home
-              </Link>
-              <Link
-                onClick={() => setNavOpen(!navOpen)}
-                className="hover:font-bold  text-gray-700  font-semibold  hover:text-black"
-                href="/about"
-              >
-                About
-              </Link>
-              <Link
-                onClick={() => setNavOpen(!navOpen)}
-                className="hover:font-bold  text-gray-700  font-semibold  hover:text-black"
-                href={"/service"}
-              >
-                Services
-              </Link>
-              <Link
-                onClick={() => setNavOpen(!navOpen)}
-                className="hover:font-bold  text-gray-700  font-semibold  hover:text-black"
-                href={"/contact"}
-              >
-                Contact
-              </Link>
-              <Link
-                onClick={() => setNavOpen(!navOpen)}
-                className="hover:font-bold  text-gray-700  font-semibold  hover:text-black"
-                href={"/blog"}
-              >
-                Blogs
-              </Link>
-            </div>
-          </div>
-        </SheetContent> */}
 
         <SheetContent
           side="left"
           className="p-0 bg-white w-[300px] sm:w-[350px] border-r border-green-700"
         >
           <div className="flex flex-col h-full">
-            <div className="flex items-center justify-between p-6 border-b">
-              <p className="font-serif font-bold text-2xl">Equity Edge</p>
-            </div>
+            <SheetHeader className="p-6 border-b">
+              <SheetTitle className="font-serif font-bold text-2xl">
+                Sections
+              </SheetTitle>
+            </SheetHeader>
 
             <div className="flex-grow p-6">
               <div className="flex flex-col text-lg gap-2">
@@ -125,7 +80,7 @@ const Navbar = () => {
                   className="flex items-center gap-4 p-3 rounded-lg text-gray-700 font-semibold hover:bg-gray-100 hover:text-black transition-colors"
                   href={"/service"}
                 >
-                  <Briefcase size={22} /> Offerings 
+                  <Briefcase size={22} /> Offerings
                 </Link>
                 <Link
                   onClick={() => setNavOpen(false)}
@@ -165,7 +120,7 @@ const Navbar = () => {
           About
         </Link>
         <Link href={"/service"} className="hover:font-bold  duration-300 ">
-          Offerings 
+          Offerings
         </Link>
         <Link href={"/contact"} className="hover:font-bold  duration-300 ">
           Contact

@@ -10,6 +10,9 @@ import {
   CheckCircle,
   ChevronDown,
   Check,
+  MessageSquare, // Added for "Subscribers Queries Solved"
+  Users, // Added for "Subscribers"
+  Globe, // Added for "Subscribers located across states and countries"
 } from "lucide-react";
 import Image from "next/image";
 import CountUp from "react-countup";
@@ -20,11 +23,11 @@ const Service = () => {
   return (
     <div className="pt-24 bg-white">
       {/* 1. HERO SECTION */}
-      <section className="bg-[#F9F7F3] text-center py-16 md:py-24 px-5">
-        <h1 className="font-serif text-4xl md:text-6xl font-medium">
+      <section className="bg-[#F9F7F3]  py-16 md:py-24 px-5">
+        <h1 className="font-serif text-center text-4xl md:text-6xl font-medium">
           Our Research Services
         </h1>
-        <p className="text-lg md:text-xl text-gray-700 mt-4 max-w-3xl mx-auto">
+        <p className="text-lg text-gray-700 mt-4 max-w-3xl mx-auto">
           In-depth, unbiased, and actionable equity research designed to give
           you a competitive edge.
         </p>
@@ -32,8 +35,8 @@ const Service = () => {
 
       {/* 2. WHAT WE OFFER */}
       <section className="text-gray-700 md:px-10 lg:px-32 py-16">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl font-serif font-medium lg:text-5xl">
+        <div className="max-w-4xl mx-auto ">
+          <h2 className="text-4xl text-center font-serif font-medium lg:text-5xl">
             What We Offer
           </h2>
           <p className="md:text-lg mt-4">
@@ -67,7 +70,7 @@ const Service = () => {
       </section>
 
       {/* 3. WHAT'S INSIDE OUR REPORTS */}
-      <section className="bg-[#F9F7F3] py-16 md:px-10 lg:px-32">
+      <section className="bg-[#F9F7F3] py-16 md:px-10 lg:px-20 overflow-hidden">
         <h3 className="text-center font-serif text-4xl md:text-5xl font-medium mb-12">
           What&apos;s Inside Every Report?
         </h3>
@@ -173,83 +176,7 @@ const Service = () => {
         </div>
       </section>
 
-      {/* 4. FOCUS ON GROWTH */}
-      <section className="py-16 md:px-10 lg:px-32">
-        <p className="text-4xl md:text-5xl font-serif font-medium lg:pt-10 text-center lg:text-left">
-          Focus on Growth and Breadth
-        </p>
-        <p className="text-lg py-4 text-center lg:text-left">
-          Financial success demands disciplined focus on growth metrics and
-          broad systemic exposure, mitigating concentrated risk while maximizing
-          long-term shareholder value creation.
-        </p>
-        <div className="lg:flex lg:items-center md:gap-12">
-          <Image
-            className="lg:w-1/2"
-            src={"/home/design.webp"}
-            width={1000}
-            height={1000}
-            alt="factofSubstacks"
-          />
-          <div className="lg:w-1/2">
-            <div className="space-y-4 mt-8 lg:mt-0">
-              <div className="border-l-4 text-2xl pl-5 my-3 border-[#068466] font-serif text-black font-medium lg:text-3xl hover:font-semibold duration-300">
-                <CountUp
-                  end={20}
-                  duration={2.5}
-                  enableScrollSpy
-                  scrollSpyOnce
-                />
-                + Reports Published
-              </div>
-              <div className="border-l-4 text-2xl pl-5 my-3 border-[#068466] font-serif text-black font-medium lg:text-3xl hover:font-semibold duration-300">
-                <CountUp
-                  end={20}
-                  duration={2.5}
-                  enableScrollSpy
-                  scrollSpyOnce
-                />
-                + Sectors Covered
-              </div>
-              <div className="border-l-4 text-2xl pl-5 my-3 border-[#068466] font-serif text-black font-medium lg:text-3xl hover:font-semibold duration-300">
-                <CountUp
-                  end={500}
-                  duration={2.5}
-                  enableScrollSpy
-                  scrollSpyOnce
-                />
-                + Subscribers Queries Solved
-              </div>
-              <div className="border-l-4 text-2xl pl-5 my-3 border-[#068466] font-serif text-black font-medium lg:text-3xl hover:font-semibold duration-300">
-                <CountUp
-                  end={13}
-                  duration={2.5}
-                  enableScrollSpy
-                  scrollSpyOnce
-                />
-                k+ Subscriber
-              </div>
-              <div className="border-l-4 text-2xl pl-5 my-3 border-[#068466] font-serif text-black font-medium lg:text-3xl hover:font-semibold duration-300">
-                Subscribers located across{" "}
-                <CountUp
-                  end={37}
-                  duration={2.5}
-                  enableScrollSpy
-                  scrollSpyOnce
-                />{" "}
-                states and{" "}
-                <CountUp
-                  end={121}
-                  duration={2.5}
-                  enableScrollSpy
-                  scrollSpyOnce
-                />{" "}
-                countries
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+   
 
       {/* 5. PRICING */}
       <section className="py-16 bg-[#F9F7F3] md:py-4 lg:px-20">
@@ -383,16 +310,14 @@ const Service = () => {
                 Graphs(Future Plans, Historical Performance etc.)
               </li>
               <li className="flex gap-3 font-semibold">
-                <Check className="text-[#068466] shrink-0" /> Competitive
-                Landscape.
+                <Check className="text-[#068466] shrink-0" /> Competitive Landscape and Analysis.
               </li>
               <li className="flex gap-3 font-semibold">
                 <Check className="text-[#068466] shrink-0" />
                 Peer Comparison-Key Metrics (Capex, Margins etc.)
               </li>
               <li className="flex gap-3 font-semibold">
-                <Check className="text-[#068466] shrink-0" /> Global Industry
-                Analysis.
+                <Check className="text-[#068466] shrink-0" /> Global and Indian Industry Analysis.
               </li>
               <li className="flex gap-3 font-semibold">
                 <Check className="text-[#068466] shrink-0" /> Indian Analysis.
@@ -400,6 +325,9 @@ const Service = () => {
               <li className="flex gap-3 font-semibold">
                 <Check className="text-[#068466] shrink-0" /> We keep Adding
                 More!
+              </li>
+              <li className="flex gap-3 font-semibold">
+                <Check className="text-[#068466] shrink-0" /> Company Valuation
               </li>
             </ul>
           </div>
